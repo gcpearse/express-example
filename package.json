@@ -4,6 +4,7 @@
   "main": "listen.js",
   "scripts": {
     "start": "tsc && node dist/listen.js",
+    "clear-dist": "rm -rf dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",
