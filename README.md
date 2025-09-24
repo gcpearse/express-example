@@ -61,6 +61,10 @@ Add the following code to `app.ts`:
 import express from "express"
 
 export const app = express()
+
+app.get('/', (_req, res) => {
+  res.send('Hello, world!')
+})
 ```
 
 Add the following code to `listen.ts`:
