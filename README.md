@@ -4,6 +4,7 @@
 
 - [Initial setup](#initial-setup)
 - [Express setup](#express-setup)
+- [Running the server](#running-the-server)
 
 ## Initial setup
 
@@ -88,8 +89,14 @@ In `package.json`, make `listen.js` the primary entry point:
 "main": "listen.js"
 ```
 
+## Running the server
+
 Add the following script to `package.json`:
 ```json
 "start": "tsc && node dist/listen.js"
 ```
-> This will compile the code and start the server
+
+Now run the command to compile the code and start the server:
+```zsh
+npm run start
+```
