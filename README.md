@@ -1,5 +1,7 @@
 # Express example
 
+A simple Express server application built in TypeScript.
+
 ## Contents
 
 - [Initial setup](#initial-setup)
@@ -27,7 +29,7 @@ Create a `tsconfig.json` file:
 npx tsc --init
 ```
 
-Enable the following:
+Enable the following settings in `tsconfig.json`:
 - `"rootDir": "./src"`
 - `"outDir": "./dist"` 
 - `"noImplicitReturns": true` to flag code paths that do not return a value
@@ -41,7 +43,7 @@ npm i -D @types/node
 
 ## Express setup
 
-Install Express and type definitions:
+Install Express and corresponding type definitions:
 ```zsh
 npm install express
 ```
@@ -49,7 +51,7 @@ npm install express
 npm i -D @types/express
 ```
 
-Create a `src` directory with two files to begin with:
+Create a `src` directory with two files - `app.ts` and `listen.ts`:
 ```zsh
 mkdir src
 ```
@@ -79,7 +81,7 @@ app.listen(port, () => {
 })
 ```
 
-If you see an import warning, try adding the following code to `package.json`:
+If you see an import warning, add the following to `package.json`:
 ```json
 "type": "module"
 ```
