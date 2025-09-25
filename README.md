@@ -54,7 +54,7 @@ npm i -D @types/express
 
 Create a `src` directory with two files - `app.ts` and `listen.ts`:
 ```zsh
-mkdir src && touch src/app.ts && touch src/listen.ts
+mkdir src && touch src/app.ts src/listen.ts
 ```
 
 Add the following code to `app.ts`:
@@ -165,4 +165,16 @@ npm install pg
 ```
 ```zsh
 npm i -D @types/pg
+```
+
+### Environment variables and dotenv
+
+Create `.env` files for testing and development e.g.
+```zsh
+touch .env.test .env.development
+```
+
+Install the dotenv package:
+```zsh
+npm install dotenv
 ```
