@@ -1,6 +1,6 @@
-import { countriesData } from "../data/development/countries.js"
-import { db } from "../index.js"
-import { seed } from "./seed.js"
+import { countriesData } from "../data/development/countries"
+import { db } from "../index"
+import { seed } from "./seed"
 
 const seedDatabase = async (): Promise<void> => {
   

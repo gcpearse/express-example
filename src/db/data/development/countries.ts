@@ -1,4 +1,4 @@
-import type { CountryData } from "../../../types/data.js";
+import type { CountryData } from "../../../types/data";
 
 export const countriesData: CountryData[] = [
   {
