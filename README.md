@@ -317,7 +317,7 @@ touch src/db/seeding/seed-db.ts
 ```
 
 Add the following code to the file:
-```ts
+```js
 import { countriesData } from "../data/development/countries.js"
 import { db } from "../index.js"
 import { seed } from "./seed.js"
@@ -332,4 +332,9 @@ const seedDatabase = async (): Promise<void> => {
 }
 
 seedDatabase()
+```
+
+Add the following script to `package.json` to run and seed the development database:
+```json
+"seed": "tsc && node dist/db/seeding/seed-db.js"
 ```
