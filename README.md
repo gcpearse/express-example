@@ -5,9 +5,16 @@ A simple Express server application built with TypeScript and PostgreSQL.
 ## Contents
 
 - [Initial setup](#initial-setup)
+  - [Initialisation](#initialisation)
+  - [TypeScript](#typescript)
 - [Express setup](#express-setup)
 - [Running the server](#running-the-server)
 - [Database setup](#database-setup)
+  - [Installing PostgreSQL with Homebrew](#installing-postgresql-with-homebrew)
+  - [Creating the database](#creating-the-database)
+  - [Using PostgreSQL with Node](#using-postgresql-with-node)
+  - [Environment variables and dotenv](#environment-variables-and-dotenv)
+  - [Connection pool](#connection-pool)
 
 ## Initial setup
 
