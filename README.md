@@ -88,7 +88,6 @@ app.use(express.json())
 app.get("/", (_req, res) => {
   res.send("Hello, world!")
 })
-
 ```
 
 Add the following code to `listen.ts`:
