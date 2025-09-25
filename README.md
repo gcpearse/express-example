@@ -25,6 +25,7 @@ A simple Express server application built with TypeScript and PostgreSQL.
 - [Error handling](#error-handling)
 - [Tests](#tests)
   - [Install and configure Jest](#install-and-configure-jest)
+  - [Integration tests](#integration-tests)
 
 ## Initial setup
 
@@ -420,6 +421,7 @@ export const getCountries: RequestHandler = async (_req, res, next) => {
 First, create a new file called `countries.ts` under `src/types` and add the following type:
 ```js
 export type Country = {
+  country_id: number
   name: string
   capital: string
   is_visited: boolean
@@ -571,5 +573,75 @@ npx ts-jest config:init
 
 Update the test script in `package.json`:
 ```json
-"test": "jest"
+"test": "jest src/ --runInBand"
+```
+
+Add Jest to the types array in `tsconfig.json`:
+```json
+"types": ["jest"]
+```
+
+### Integration tests
+
+Install SuperTest and corresponding type definitions:
+```zsh
+npm i -D supertest @types/supertest
+```
+
+Create a new `__tests__` directory with an `integration` directory for integration tests:
+```zsh
+mkdir src/__tests__ && mkdir src/__tests__/integration
+```
+
+Create a test file called `countries.test.ts` under `__tests__/integration`:
+```zsh
+touch src/__tests__/integration/countries.test.ts
+```
+
+Add the following example of a simple test to the test file:
+```js
+import { app } from "../../app"
+import { db } from "../../db"
+import { countriesData } from "../../db/data/test/countries"
+import { seed } from "../../db/seeding/seed"
+import request from "supertest"
+import { Country } from "../../types/countries"
+
+beforeEach(async () => {
+  await seed(countriesData)
+})
+
+afterAll(async () => {
+  await seed(countriesData)
+
+  db.end()
+})
+
+describe("GET /countries", () => {
+
+  test("200 OK - responds with an array of countries", async () => {
+
+    const { body } = await request(app)
+      .get("/countries")
+      .expect(200)
+
+    const countries: Country[] = body.countries
+
+    expect(countries.length).toBe(3)
+
+    for (const country of body.countries) {
+      expect(country).toMatchObject<Country>({
+        country_id: expect.any(Number),
+        name: expect.any(String),
+        capital: expect.any(String),
+        is_visited: expect.any(Boolean),
+      })
+    }
+  })
+})
+```
+
+Run all tests with this shortcut command:
+```zsh
+npm t
 ```
