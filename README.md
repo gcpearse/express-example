@@ -64,6 +64,14 @@ npm install express
 npm i -D @types/express
 ```
 
+Install CORS and corresponding type definitions:
+```zsh
+npm install cors
+```
+```zsh
+npm i -D @types/cors
+```
+
 Create a `src` directory with two files - `app.ts` and `listen.ts`:
 ```zsh
 mkdir src && touch src/app.ts src/listen.ts
