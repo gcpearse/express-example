@@ -1,6 +1,6 @@
 import format from "pg-format"
 import { db } from "../index.js"
-import type { countryData } from "../data/test/countries.js"
+import type { countryData } from "../../types/data.js"
 
 export const seed = async (countriesData: countryData[]): Promise<void> => {
 
