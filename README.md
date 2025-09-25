@@ -240,7 +240,7 @@ mkdir src/types && touch src/types/data.ts
 
 Add and export the following example:
 ```ts
-export type countryData = {
+export type CountryData = {
   name: string
   capital: string
 }
@@ -253,7 +253,7 @@ mkdir src/db
 
 Create a `data/test` directory inside `db` and add files with raw test data. For the purposes of this example, we have created `src/db/data/test/countries.ts` with the following sample data:
 ```ts
-export const countriesData: countryData[] = [
+export const countriesData: CountryData[] = [
   {
     name: "France",
     capital: "Paris",
@@ -288,9 +288,9 @@ Add the following code to `seed.ts` to generate a seed function. This will creat
 ```js
 import format from "pg-format"
 import { db } from "../index.js"
-import type { countryData } from "../../types/data.js"
+import type { CountryData } from "../../types/data.js"
 
-export const seed = async (countriesData: countryData[]): Promise<void> => {
+export const seed = async (countriesData: CountryData[]): Promise<void> => {
 
   await db.query(`
     DROP TABLE IF EXISTS countries;
