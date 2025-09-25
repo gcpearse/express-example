@@ -22,6 +22,7 @@ A simple Express server application built with TypeScript and PostgreSQL.
   - [Routes](#routes)
   - [Controllers](#controllers)
   - [Services](#services)
+- [Error handling](#error-handling)
 
 ## Initial setup
 
