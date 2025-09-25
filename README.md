@@ -16,6 +16,7 @@ A simple Express server application built with TypeScript and PostgreSQL.
   - [Environment variables and dotenv](#environment-variables-and-dotenv)
   - [Connection pool](#connection-pool)
   - [Test data](#test-data)
+  - [Seeding](#seeding)
 
 ## Initial setup
 
