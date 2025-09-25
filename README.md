@@ -41,11 +41,13 @@ npx tsc --init
 ```
 
 Enable the following settings in `tsconfig.json`:
-- `"rootDir": "./src"`
-- `"outDir": "./dist"` 
-- `"noImplicitReturns": true` to flag code paths that do not return a value
-- `"noUnusedLocals": true` to flag variables that are declared but never read
-- `"noUnusedParameters": true` to flag parameters that are declared but never read
+```json
+"rootDir": "./src"
+"outDir": "./dist"
+"noImplicitReturns": true
+"noUnusedLocals": true
+"noUnusedParameters": true
+```
 
 Install type definitions for Node:
 ```zsh
@@ -89,9 +91,9 @@ app.listen(port, () => {
 })
 ```
 
-If you see an import warning, add the following to `package.json`:
+If you see an import warning, ensure `verbatimModuleSyntax` is set to `false` in `tsconfig.json`:
 ```json
-"type": "module"
+"verbatimModuleSyntax": false
 ```
 
 In `package.json`, make `listen.js` the primary entry point:
