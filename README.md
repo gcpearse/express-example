@@ -215,3 +215,33 @@ if (!process.env.PGDATABASE) {
 
 export const db = new Pool()
 ```
+
+### Test data and seeding
+
+Create a new `db` directory:
+```zsh
+mkdir src/db
+```
+
+Create a `data/test` directory inside `db` and add files with raw test data. For the purposes of this example, we have created `src/db/data/test/countries.ts` with the following sample data:
+```ts
+type countryData = {
+  name: string
+  capital: string
+}
+
+export const countriesData: countryData[] = [
+  {
+    name: "France",
+    capital: "Paris",
+  },
+  {
+    name: "Italy",
+    capital: "Rome",
+  },
+  {
+    name: "Spain",
+    capital: "Madrid",
+  },
+]
+```
