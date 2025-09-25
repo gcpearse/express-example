@@ -17,6 +17,7 @@ A simple Express server application built with TypeScript and PostgreSQL.
   - [Connection pool](#connection-pool)
   - [Test data](#test-data)
   - [Seeding](#seeding)
+  - [Development data](#development-data)
 
 ## Initial setup
 
@@ -220,6 +221,19 @@ export const db = new Pool()
 
 ### Test data
 
+First, we need custom types for our data. Create a `src/types` directory and add a file called `data.ts`:
+```zsh
+mkdir src/types && touch src/types/data.ts
+```
+
+Add and export the following example:
+```ts
+export type countryData = {
+  name: string
+  capital: string
+}
+```
+
 Create a new `db` directory:
 ```zsh
 mkdir src/db
@@ -227,11 +241,6 @@ mkdir src/db
 
 Create a `data/test` directory inside `db` and add files with raw test data. For the purposes of this example, we have created `src/db/data/test/countries.ts` with the following sample data:
 ```ts
-type countryData = {
-  name: string
-  capital: string
-}
-
 export const countriesData: countryData[] = [
   {
     name: "France",
@@ -267,7 +276,7 @@ Add the following code to `seed.ts` to generate a seed function. This will creat
 ```js
 import format from "pg-format"
 import { db } from "../index.js"
-import type { countryData } from "../data/test/countries.js"
+import type { countryData } from "../../types/data.js"
 
 export const seed = async (countriesData: countryData[]): Promise<void> => {
 
@@ -294,4 +303,31 @@ export const seed = async (countriesData: countryData[]): Promise<void> => {
     countriesData.map(country => Object.values(country))
   ))
 }
+```
+
+### Development data
+
+Create a `development` directory inside `db/data` and add files with raw development data. For the purposes of this example, we have copied `src/db/data/test/countries.ts`.
+
+To seed the development database, we will need to run the seed function on this data. Create a new `seed-db.ts` file in `src/db/seeding`:
+```zsh
+touch src/db/seeding/seed-db.ts
+```
+
+Add the following code to the file:
+```ts
+import { countriesData } from "../data/development/countries.js"
+import { db } from "../index.js"
+import { seed } from "./seed.js"
+
+const seedDatabase = async (): Promise<void> => {
+  
+  await seed(countriesData)
+
+  await db.end()
+
+  return
+}
+
+seedDatabase()
 ```
