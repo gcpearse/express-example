@@ -1,6 +1,9 @@
 # Compiled assets
 /dist
 
+# Environment
+.env.*
+
 # macOS
 .DS_Store
 
