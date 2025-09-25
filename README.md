@@ -453,3 +453,101 @@ export const findAllCountries = async (): Promise<Country[]> => {
   return result.rows
 }
 ```
+
+## Error handling
+
+Create a new `middleware` directory and add a file called `errors.ts`:
+```zsh
+mkdir src/middleware && touch src/middleware/errors.ts
+```
+
+Add the following code to `errors.ts`:
+```js
+import { ErrorRequestHandler, RequestHandler } from "express"
+
+const CODE_INVALID_TEXT_REPRESENTATION = "22P02"
+const CODE_NOT_NULL_VIOLATION = "23502"
+
+export const customErrorHandler: ErrorRequestHandler = (err, _req, res, next) => {
+
+  if (err.status) {
+    res.status(err.status).send({
+      message: err.message,
+      details: err.details
+    })
+  } else {
+    next(err)
+  }
+}
+
+export const psqlErrorHandler: ErrorRequestHandler = (err, _req, res, next) => {
+
+  if (err.code === CODE_INVALID_TEXT_REPRESENTATION) {
+    res.status(400).send({
+      message: "Bad Request",
+      details: "Invalid text representation"
+    })
+  } else if (err.code === CODE_NOT_NULL_VIOLATION) {
+    res.status(400).send({
+      message: "Bad Request",
+      details: "Not null violation"
+    })
+  } else {
+    next(err)
+  }
+}
+
+export const serverErrorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
+
+  console.log(err.code)
+
+  res.status(500).send({
+    message: "Internal Server Error"
+  })
+}
+
+export const notFoundHandler: RequestHandler = async (_req, res, next) => {
+
+  try {
+    res.status(404).send({ 
+      message: "Not Found",
+      details: "Path not found" 
+    })
+  } catch (err) {
+    next(err)
+  }
+}
+```
+
+Now, update `app.ts` to include the following code:
+```js
+import { customErrorHandler, notFoundHandler, psqlErrorHandler, serverErrorHandler } from "./middleware/errors"
+
+// ...
+
+app.use(customErrorHandler, psqlErrorHandler, serverErrorHandler)
+
+app.all("/*any", notFoundHandler)
+```
+Our app can now gracefully handle errors as well as non-existent routes.
+
+At this point, `app.ts` should look like this:
+```js
+import express from "express"
+import { countriesRouter } from "./routes/countries"
+import { customErrorHandler, notFoundHandler, psqlErrorHandler, serverErrorHandler } from "./middleware/errors"
+
+export const app = express()
+
+app.use(express.json())
+
+app.get("/", (_req, res) => {
+  res.send("Hello, world!")
+})
+
+app.use("/countries", countriesRouter)
+
+app.use(customErrorHandler, psqlErrorHandler, serverErrorHandler)
+
+app.all("/*any", notFoundHandler)
+```
