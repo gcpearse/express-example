@@ -154,3 +154,13 @@ Add the following script to `package.json`:
 ```json
 "db-setup": "psql -f src/db/db-setup.sql"
 ```
+
+### Using PostgreSQL with Node
+
+Install node-postgres and corresponding type definitions:
+```zsh
+npm install pg
+```
+```zsh
+npm i -D @types/pg
+```
