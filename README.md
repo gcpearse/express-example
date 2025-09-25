@@ -54,10 +54,7 @@ npm i -D @types/express
 
 Create a `src` directory with two files - `app.ts` and `listen.ts`:
 ```zsh
-mkdir src
-```
-```zsh
-touch src/app.ts && touch listen.ts
+mkdir src && touch src/app.ts && touch src/listen.ts
 ```
 
 Add the following code to `app.ts`:
@@ -138,3 +135,22 @@ Helpful commands once connected:
 - `\l` - list your databases
 - `\c <db name>` - connect to a database
 - `\dt` - list relations / tables
+
+### Creating the database
+
+Create a `src/db` directory with a `db-setup-sql` file:
+```zsh
+mkdir src/db && touch src/db/db-setup.sql
+```
+
+Add the following code to `db-setup-sql`:
+```sql
+DROP DATABASE IF EXISTS express_example;
+
+CREATE DATABASE express_example;
+```
+
+Add the following script to `package.json`:
+```json
+"db-setup": "psql -f src/db/db-setup.sql"
+```
