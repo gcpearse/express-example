@@ -20,6 +20,8 @@ A simple Express server application built with TypeScript and PostgreSQL.
   - [Development data](#development-data)
 - [Building an endpoint](#building-an-endpoint)
   - [Routes](#routes)
+  - [Controllers](#controllers)
+  - [Services](#services)
 
 ## Initial setup
 
@@ -51,6 +53,10 @@ Enable the following settings in `tsconfig.json`:
 "noUnusedParameters": true
 ```
 
+These settings create a source directory `/src` and distribution directory `/dist`, as well as flagging:
+- variables with an implicit `any` type
+- variables and parameters that are declared but never read
+
 Install type definitions for Node:
 ```zsh
 npm i -D @types/node
@@ -74,7 +80,7 @@ npm install cors
 npm i -D @types/cors
 ```
 
-Create a `src` directory with two files - `app.ts` and `listen.ts`:
+Create a `src` directory and add two files - `app.ts` and `listen.ts`:
 ```zsh
 mkdir src && touch src/app.ts src/listen.ts
 ```
@@ -125,6 +131,8 @@ Now run the command to compile the code and start the server:
 npm run start
 ```
 
+Check `http://localhost:3000/` - you should see **Hello, world!** displayed in the browser.
+
 ## Database setup
 
 ### Installing PostgreSQL with Homebrew
@@ -149,7 +157,7 @@ To connect to your local databases, run:
 psql
 ```
 
-If you see a database not found warning when running `psql`, you may need to create a database for your username with the following command:
+If you see a database not found warning when running `psql`, you may need to create a database for your username by running the following command:
 ```zsh
 createdb <username>
 ```
@@ -167,7 +175,7 @@ Create a `src/db` directory with a `db-setup-sql` file:
 mkdir src/db && touch src/db/db-setup.sql
 ```
 
-Add the following code to `db-setup-sql` to drop and create test and development databases:
+Add the following code to `db-setup-sql` to drop and create the test and development databases:
 ```sql
 DROP DATABASE IF EXISTS express_example_dev;
 DROP DATABASE IF EXISTS express_example_test;
@@ -198,7 +206,7 @@ Create `.env` files for testing and development e.g.
 touch .env.test .env.development
 ```
 
-Add `PGDATABASE=` plus a database name to each `.env` file matching the database names in `db-setup.sql` e.g.
+Add `PGDATABASE=` plus the corresponding database name from `db-setup.sql` to each `.env` file e.g.
 ```
 PGDATABASE=express_example_test
 ```
@@ -321,9 +329,9 @@ export const seed = async (countriesData: CountryData[]): Promise<void> => {
 
 ### Development data
 
-Create a `development` directory inside `db/data` and add files with raw development data. For the purposes of this example, we have copied `src/db/data/test/countries.ts`.
+Create a `development` directory inside `db/data` and add files with raw development data. For the purposes of this example, we have used the same data as `src/db/data/test/countries.ts`.
 
-To seed the development database, we will need to run the seed function on this data. Create a new `seed-db.ts` file in `src/db/seeding`:
+To seed the development database, we will need to run the seed function using this data. Create a new `seed-db.ts` file in `src/db/seeding`:
 ```zsh
 touch src/db/seeding/seed-db.ts
 ```
@@ -414,7 +422,7 @@ export type Country = {
   is_visited: boolean
 }
 ```
-We will need this type in the `findAllCountries` function in the next step..
+We will need this type in the `findAllCountries` function in the next step.
 
 Now, create a new `services` directory and add a file called `countries.ts`:
 ```zsh
