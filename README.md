@@ -143,11 +143,13 @@ Create a `src/db` directory with a `db-setup-sql` file:
 mkdir src/db && touch src/db/db-setup.sql
 ```
 
-Add the following code to `db-setup-sql`:
+Add the following code to `db-setup-sql` to drop and create test and development databases:
 ```sql
-DROP DATABASE IF EXISTS express_example;
+DROP DATABASE IF EXISTS express_example_dev;
+DROP DATABASE IF EXISTS express_example_test;
 
-CREATE DATABASE express_example;
+CREATE DATABASE express_example_dev;
+CREATE DATABASE express_example_test;
 ```
 
 Add the following script to `package.json`:
