@@ -1,6 +1,6 @@
-import type { countryData } from "../../../types/data.js";
+import type { CountryData } from "../../../types/data.js";
 
-export const countriesData: countryData[] = [
+export const countriesData: CountryData[] = [
   {
     name: "France",
     capital: "Paris",

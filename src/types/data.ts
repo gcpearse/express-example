@@ -1,4 +1,4 @@
-export type countryData = {
+export type CountryData = {
   name: string
   capital: string
 }
