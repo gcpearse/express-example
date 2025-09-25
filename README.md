@@ -174,7 +174,39 @@ Create `.env` files for testing and development e.g.
 touch .env.test .env.development
 ```
 
+Add `PGDATABASE=` plus a database name to each `.env` file matching the database names in `db-setup.sql` e.g.
+```
+PGDATABASE=express_example_test
+```
+
 Install the dotenv package:
 ```zsh
 npm install dotenv
 ```
+
+### Connection pool
+
+Create an `index.ts` file in `src/db`:
+```zsh
+touch src/db/index.ts
+```
+
+Add the following code to `index.ts`:
+```js
+import dotenv from "dotenv"
+import { Pool } from "pg"
+
+const ENV = process.env.NODE_ENV || "development"
+
+dotenv.config({
+  path: `${__dirname}/../../.env.${ENV}`
+})
+
+if (!process.env.PGDATABASE) {
+  throw new Error("PGDATABASE is not set")
+}
+
+export const db = new Pool()
+```
+
+This sets up dotenv configuration and a database connection pool.
