@@ -1,8 +1,11 @@
 import { ErrorRequestHandler, RequestHandler } from "express"
 
+// Common PostgreSQL error codes (see docs for more examples)
 const CODE_INVALID_TEXT_REPRESENTATION = "22P02"
 const CODE_NOT_NULL_VIOLATION = "23502"
 
+// The next function calls the next middleware function in the order of succession
+// In this case, if err.status is falsy, customErrorHandler will call psqlErrorHandler
 export const customErrorHandler: ErrorRequestHandler = (err, _req, res, next) => {
 
   if (err.status) {
@@ -32,6 +35,7 @@ export const psqlErrorHandler: ErrorRequestHandler = (err, _req, res, next) => {
   }
 }
 
+// If all previous middleware functions have been exhausted, serverErrorHandler is called and sends a 500 error
 export const serverErrorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
 
   console.log(err.code)

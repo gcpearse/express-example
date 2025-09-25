@@ -11,4 +11,5 @@ if (!process.env.PGDATABASE) {
   throw new Error("PGDATABASE env variable not set")
 }
 
+// Creates a database connection pool
 export const db = new Pool()
