@@ -18,6 +18,7 @@ A simple Express server application built with TypeScript and PostgreSQL.
   - [Test data](#test-data)
   - [Seeding](#seeding)
   - [Development data](#development-data)
+- [Building an endpoint](#building-an-endpoint)
 
 ## Initial setup
 
@@ -92,7 +93,7 @@ app.get("/", (_req, res) => {
 
 Add the following code to `listen.ts`:
 ```js
-import { app } from "./app.js"
+import { app } from "./app"
 
 const port = process.env.PORT || 3000
 
@@ -287,8 +288,8 @@ mkdir src/db/seeding && touch src/db/seeding/seed.ts
 Add the following code to `seed.ts` to generate a seed function. This will create and populate tables in the database(s) with the raw data in the `data` directory:
 ```js
 import format from "pg-format"
-import { db } from "../index.js"
-import type { CountryData } from "../../types/data.js"
+import { db } from "../index"
+import type { CountryData } from "../../types/data"
 
 export const seed = async (countriesData: CountryData[]): Promise<void> => {
 
@@ -328,9 +329,9 @@ touch src/db/seeding/seed-db.ts
 
 Add the following code to the file:
 ```js
-import { countriesData } from "../data/development/countries.js"
-import { db } from "../index.js"
-import { seed } from "./seed.js"
+import { countriesData } from "../data/development/countries"
+import { db } from "../index"
+import { seed } from "./seed"
 
 const seedDatabase = async (): Promise<void> => {
   
@@ -347,4 +348,33 @@ seedDatabase()
 Add the following script to `package.json` to run and seed the development database:
 ```json
 "seed": "tsc && node dist/db/seeding/seed-db.js"
+```
+
+## Building an endpoint
+
+### Routes
+
+First, update `app.ts` to include the following code:
+```js
+import { countriesRouter } from "./routes/countries"
+
+// ...
+
+app.use("/countries", countriesRouter)
+```
+
+Now, create a new `routes` directory with a file called `countries.ts`:
+```zsh
+mkdir src/routes && touch src/routes/countries.ts
+```
+
+Add the following code to `routes/countries.ts`:
+```js
+import { Router } from "express";
+import { getCountries } from "../controllers/countries";
+
+export const countriesRouter = Router()
+
+countriesRouter.route("/")
+  .get(getCountries)
 ```
