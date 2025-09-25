@@ -19,6 +19,7 @@ A simple Express server application built with TypeScript and PostgreSQL.
   - [Seeding](#seeding)
   - [Development data](#development-data)
 - [Building an endpoint](#building-an-endpoint)
+  - [Routes](#routes)
 
 ## Initial setup
 
@@ -363,18 +364,84 @@ import { countriesRouter } from "./routes/countries"
 app.use("/countries", countriesRouter)
 ```
 
-Now, create a new `routes` directory with a file called `countries.ts`:
+Now, create a new `routes` directory and add a file called `countries.ts`:
 ```zsh
 mkdir src/routes && touch src/routes/countries.ts
 ```
 
 Add the following code to `routes/countries.ts`:
 ```js
-import { Router } from "express";
-import { getCountries } from "../controllers/countries";
+import { Router } from "express"
+import { getCountries } from "../controllers/countries"
 
 export const countriesRouter = Router()
 
 countriesRouter.route("/")
   .get(getCountries)
+```
+
+### Controllers
+
+Create a new `controllers` directory and add a file called `countries.ts`:
+```zsh
+mkdir src/controllers && touch src/controllers/countries.ts
+```
+
+Add the following code to `controllers/countries.ts`:
+```js
+import { RequestHandler } from "express"
+import { findAllCountries } from "../services/countries"
+
+export const getCountries: RequestHandler = async (_req, res, next) => {
+
+  try {
+    const countries = await findAllCountries()
+
+    res.status(200).send({ countries })
+  } catch (err) {
+    next(err)
+  }
+}
+```
+
+### Services
+
+First, create a new file called `countries.ts` under `src/types` and add the following type:
+```js
+export type Country = {
+  name: string
+  capital: string
+  is_visited: boolean
+}
+```
+We will need this type in the `findAllCountries` function in the next step..
+
+Now, create a new `services` directory and add a file called `countries.ts`:
+```zsh
+mkdir src/services && touch src/services/countries.ts
+```
+
+Add the following code to `services/countries.ts`:
+```js
+import { QueryResult } from "pg"
+import { db } from "../db"
+import { Country } from "../types/countries"
+
+export const findAllCountries = async (): Promise<Country[]> => {
+
+  const result: QueryResult<Country> = await db.query(`
+    SELECT *
+    FROM countries;
+    `)
+
+  if (!result.rowCount) {
+    return Promise.reject({
+      status: 404,
+      message: "Not Found",
+      details: "No countries found"
+    })
+  }
+
+  return result.rows
+}
 ```
