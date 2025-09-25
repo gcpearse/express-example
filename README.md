@@ -1,12 +1,13 @@
 # Express example
 
-A simple Express server application built in TypeScript.
+A simple Express server application built with TypeScript and PostgreSQL.
 
 ## Contents
 
 - [Initial setup](#initial-setup)
 - [Express setup](#express-setup)
 - [Running the server](#running-the-server)
+- [Database setup](#database-setup)
 
 ## Initial setup
 
@@ -102,3 +103,38 @@ Now run the command to compile the code and start the server:
 ```zsh
 npm run start
 ```
+
+## Database setup
+
+### Installing PostgreSQL with Homebrew
+
+Install the latest version of PostgreSQL with `brew install` e.g.
+```zsh
+brew install postgresql@17
+```
+
+To confirm installation, run:
+```zsh
+psql --version
+```
+
+To start the server, run:
+```zsh
+brew services start postgresql@17
+```
+
+To connect to your local databases, run:
+```zsh
+psql
+```
+
+If you see a database not found warning when running `psql`, you may need to create a database for your username with the following command:
+```zsh
+createdb <username>
+```
+
+Helpful commands once connected:
+- `\q` - quit
+- `\l` - list your databases
+- `\c <db name>` - connect to a database
+- `\dt` - list relations / tables
