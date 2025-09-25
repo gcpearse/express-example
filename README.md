@@ -23,6 +23,8 @@ A simple Express server application built with TypeScript and PostgreSQL.
   - [Controllers](#controllers)
   - [Services](#services)
 - [Error handling](#error-handling)
+- [Tests](#tests)
+  - [Install and configure Jest](#install-and-configure-jest)
 
 ## Initial setup
 
@@ -551,4 +553,23 @@ app.use("/countries", countriesRouter)
 app.use(customErrorHandler, psqlErrorHandler, serverErrorHandler)
 
 app.all("/*any", notFoundHandler)
+```
+
+## Tests
+
+### Install and configure Jest
+
+Install Jest and corresponding type definitions along with ts-jest:
+```zsh
+npm i -D jest @types/jest ts-jest
+```
+
+Run the following command to generate a config file and allow Jest to transpile TypeScript:
+```zsh
+npx ts-jest config:init
+```
+
+Update the test script in `package.json`:
+```json
+"test": "jest"
 ```
