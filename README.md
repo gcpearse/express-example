@@ -15,6 +15,7 @@ A simple Express server application built with TypeScript and PostgreSQL.
   - [Using PostgreSQL with Node](#using-postgresql-with-node)
   - [Environment variables and dotenv](#environment-variables-and-dotenv)
   - [Connection pool](#connection-pool)
+  - [Test data](#test-data)
 
 ## Initial setup
 
@@ -216,7 +217,7 @@ if (!process.env.PGDATABASE) {
 export const db = new Pool()
 ```
 
-### Test data and seeding
+### Test data
 
 Create a new `db` directory:
 ```zsh
@@ -244,4 +245,19 @@ export const countriesData: countryData[] = [
     capital: "Madrid",
   },
 ]
+```
+
+### Seeding
+
+Install `pg-format` and corresponding type definitions for safe dynamic SQL queries:
+```zsh
+npm install pg-format
+```
+```zsh
+npm i -D @types/pg-format
+```
+
+Create a new `seeding` directory under `db` with a `seed.ts` file:
+```zsh
+mkdir src/db/seeding && touch src/db/seeding/seed.ts
 ```
