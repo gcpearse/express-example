@@ -191,7 +191,7 @@ Create an `index.ts` file in `src/db`:
 touch src/db/index.ts
 ```
 
-Add the following code to `index.ts`:
+Add the following code to `index.ts` to set up dotenv configuration and a connection pool:
 ```js
 import dotenv from "dotenv"
 import { Pool } from "pg"
@@ -208,5 +208,3 @@ if (!process.env.PGDATABASE) {
 
 export const db = new Pool()
 ```
-
-This sets up dotenv configuration and a database connection pool.
