@@ -6,7 +6,7 @@
     "db-setup": "psql -f src/db/db-setup.sql",
     "seed": "tsc && node dist/db/seeding/seed-db.js",
     "start": "tsc && node dist/listen.js",
-    "clear-dist": "rm -rf dist",
+    "clear-dist": "rm -rf dist/",
     "test": "jest src/ --runInBand"
   },
   "keywords": [],
