@@ -1,6 +1,6 @@
-import type { CountryData } from "../../../types/data";
+import type { CountryData, DataIndex } from "../../types/data"
 
-export const countriesData: CountryData[] = [
+const countriesData: CountryData[] = [
   {
     name: "France",
     capital: "Paris",
@@ -14,3 +14,7 @@ export const countriesData: CountryData[] = [
     capital: "Madrid",
   },
 ]
+
+export const data: DataIndex = {
+  countriesData
+}

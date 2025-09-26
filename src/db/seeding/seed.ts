@@ -1,9 +1,9 @@
 import format from "pg-format"
 import { db } from "../index"
-import type { CountryData } from "../../types/data"
+import { DataIndex } from "../../types/data"
 
 // Seeds the database by dropping, (re)creating, and populating tables
-export const seed = async (countriesData: CountryData[]): Promise<void> => {
+export const seed = async (data: DataIndex): Promise<void> => {
 
   await db.query(`
     DROP TABLE IF EXISTS countries;
@@ -25,6 +25,6 @@ export const seed = async (countriesData: CountryData[]): Promise<void> => {
     )
     VALUES %L;
     `,
-    countriesData.map(country => Object.values(country))
+    data.countriesData.map(country => Object.values(country))
   ))
 }

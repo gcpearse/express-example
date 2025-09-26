@@ -1,16 +1,16 @@
 import { app } from "../../app"
 import { db } from "../../db"
-import { countriesData } from "../../db/data/test/countries"
 import { seed } from "../../db/seeding/seed"
 import request from "supertest"
 import { Country } from "../../types/countries"
+import { data } from "../../db/data/test-data"
 
 beforeEach(async () => {
-  await seed(countriesData)
+  await seed(data)
 })
 
 afterAll(async () => {
-  await seed(countriesData)
+  await seed(data)
 
   db.end()
 })
