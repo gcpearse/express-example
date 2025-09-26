@@ -608,7 +608,7 @@ Create a test file called `countries.test.ts` under `__tests__/integration`:
 touch src/__tests__/integration/countries.test.ts
 ```
 
-Add the following example of a simple test to the test file:
+Add the following example to the test file:
 ```js
 import { app } from "../../app"
 import { db } from "../../db"
