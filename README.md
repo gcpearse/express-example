@@ -252,11 +252,15 @@ First, we need custom types for our data. Create a `src/types` directory and add
 mkdir src/types && touch src/types/data.ts
 ```
 
-Add and export the following example:
+Add and export the following types:
 ```ts
 export type CountryData = {
   name: string
   capital: string
+}
+
+export type DataIndex = {
+  countriesData: CountryData[]
 }
 ```
 
@@ -265,9 +269,11 @@ Create a new `db` directory:
 mkdir src/db
 ```
 
-Create a `data/test` directory inside `db` and add files with raw test data. For the purposes of this example, we have created `src/db/data/test/countries.ts` with the following sample data:
+Create a `data` directory inside `db` and add files with raw test data. For the purposes of this basic example, we have created `src/db/data/test.ts` with the following sample data:
 ```ts
-export const countriesData: CountryData[] = [
+import type { CountryData, DataIndex } from "../../types/data"
+
+const countriesData: CountryData[] = [
   {
     name: "France",
     capital: "Paris",
@@ -281,6 +287,10 @@ export const countriesData: CountryData[] = [
     capital: "Madrid",
   },
 ]
+
+export const data: DataIndex = {
+  countriesData
+}
 ```
 
 ### Seeding
@@ -302,9 +312,9 @@ Add the following code to `seed.ts` to generate a seed function. This will creat
 ```js
 import format from "pg-format"
 import { db } from "../index"
-import type { CountryData } from "../../types/data"
+import { DataIndex } from "../../types/data"
 
-export const seed = async (countriesData: CountryData[]): Promise<void> => {
+export const seed = async (data: DataIndex): Promise<void> => {
 
   await db.query(`
     DROP TABLE IF EXISTS countries;
@@ -326,14 +336,14 @@ export const seed = async (countriesData: CountryData[]): Promise<void> => {
     )
     VALUES %L;
     `,
-    countriesData.map(country => Object.values(country))
+    data.countriesData.map(country => Object.values(country))
   ))
 }
 ```
 
 ### Development data
 
-Create a `development` directory inside `db/data` and add files with raw development data. For the purposes of this example, we have used the same data as `src/db/data/test/countries.ts`.
+Create a `development.ts` file inside `db/data` and add raw development data. For the purposes of this example, we have used the same data as `src/db/data/test/countries.ts`.
 
 To seed the development database, we will need to run the seed function using this data. Create a new `seed-db.ts` file in `src/db/seeding`:
 ```zsh
@@ -342,13 +352,13 @@ touch src/db/seeding/seed-db.ts
 
 Add the following code to the file:
 ```js
-import { countriesData } from "../data/development/countries"
+import { data } from "../data/dev-data"
 import { db } from "../index"
 import { seed } from "./seed"
 
 const seedDatabase = async (): Promise<void> => {
   
-  await seed(countriesData)
+  await seed(data)
 
   await db.end()
 
@@ -602,17 +612,17 @@ Add the following example of a simple test to the test file:
 ```js
 import { app } from "../../app"
 import { db } from "../../db"
-import { countriesData } from "../../db/data/test/countries"
 import { seed } from "../../db/seeding/seed"
 import request from "supertest"
 import { Country } from "../../types/countries"
+import { data } from "../../db/data/test-data"
 
 beforeEach(async () => {
-  await seed(countriesData)
+  await seed(data)
 })
 
 afterAll(async () => {
-  await seed(countriesData)
+  await seed(data)
 
   db.end()
 })
