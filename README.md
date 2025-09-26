@@ -1,6 +1,6 @@
 # Express example
 
-A simple Express server application built with TypeScript and PostgreSQL.
+Instructions for a simple Express server application built with TypeScript and PostgreSQL. 
 
 ## Contents
 
