@@ -193,6 +193,11 @@ To confirm installation, run:
 psql --version
 ```
 
+If you see a psql command not found warning, you may need to run:
+```zsh
+brew link postgresql@17
+```
+
 To start the server, run:
 ```zsh
 brew services start postgresql@17
