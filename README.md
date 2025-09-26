@@ -263,7 +263,7 @@ Create a new `db` directory:
 mkdir src/db
 ```
 
-Create a `data` directory inside `db` and add files with raw test data. For the purposes of this basic example, we have created `src/db/data/test.ts` with the following sample data:
+Create a `data` directory inside `db` and add files with raw test data. For the purposes of this basic example, we have created `src/db/data/test-data.ts` with the following sample data:
 ```ts
 import type { CountryData, DataIndex } from "../../types/data"
 
@@ -337,7 +337,7 @@ export const seed = async (data: DataIndex): Promise<void> => {
 
 ### Development data
 
-Create a `development.ts` file inside `db/data` and add raw development data. For the purposes of this example, we have used the same data as `src/db/data/test/countries.ts`.
+Create a `development.ts` file inside `db/data` and add raw development data. For the purposes of this example, we have used the same data as `src/db/data/test-data.ts`.
 
 To seed the development database, we will need to run the seed function using this data. Create a new `seed-db.ts` file in `src/db/seeding`:
 ```zsh
