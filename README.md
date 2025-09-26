@@ -4,6 +4,7 @@ Instructions for a simple Express server application built with TypeScript and P
 
 ## Contents
 
+- [Quick start](#quick-start)
 - [Initial setup](#initial-setup)
 - [Express setup](#express-setup)
 - [Running the server](#running-the-server)
@@ -25,7 +26,55 @@ Instructions for a simple Express server application built with TypeScript and P
   - [Install and configure Jest](#install-and-configure-jest)
   - [Integration tests](#integration-tests)
 
+## Quick start
+
+Follow the instructions in this section if you prefer not to build the project from scratch.
+
+Begin by cloning the repository into your preferred local directory.
+
+### Prerequisites
+
+Ensure you have Node and PostgreSQL installed. This example was built with Node v20.15.0 and PostgreSQL 17.6.
+
+### Environment variables
+
+Create `.env` files for testing and development e.g.
+```zsh
+touch .env.test .env.development
+```
+
+Add `PGDATABASE=` plus the corresponding database name from `db-setup.sql` to each `.env` file e.g.
+```
+PGDATABASE=express_example_test
+```
+
+### Install packages
+
+```zsh
+npm install
+```
+
+### Set up and seed local databases
+
+```zsh
+npm run db-setup
+npm run seed
+```
+
+### Start the server
+```zsh
+npm run start
+```
+Check `http://localhost:3000/` - you should see **Hello, world!** displayed in the browser.
+
+### Run all tests
+```zsh
+npm t
+```
+
 ## Initial setup
+
+Follow the instructions from this point onwards to build the project from scratch.
 
 Initialise a new Node project:
 ```zsh
@@ -128,7 +177,6 @@ Now run the command to compile the code and start the server:
 ```zsh
 npm run start
 ```
-
 Check `http://localhost:3000/` - you should see **Hello, world!** displayed in the browser.
 
 ## Database setup
