@@ -5,8 +5,6 @@ A simple Express server application built with TypeScript and PostgreSQL.
 ## Contents
 
 - [Initial setup](#initial-setup)
-  - [Initialisation](#initialisation)
-  - [TypeScript](#typescript)
 - [Express setup](#express-setup)
 - [Running the server](#running-the-server)
 - [Database setup](#database-setup)
@@ -29,14 +27,10 @@ A simple Express server application built with TypeScript and PostgreSQL.
 
 ## Initial setup
 
-### Initialisation
-
 Initialise a new Node project:
 ```zsh
 npm init -y
 ```
-
-### TypeScript
 
 Install TypeScript:
 ```zsh
